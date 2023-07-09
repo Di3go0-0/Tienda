@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { ShopContext } from './ShopContext';
+import './cart.css'
 
 function cartItem({ product }) {
   const { removeFromCart } = useContext(ShopContext);
@@ -13,7 +14,7 @@ function cartItem({ product }) {
       <img src={product.image} alt={product.name} />
       <div>
         <h3>{product.name}</h3>
-        <p>Precio: ${product.price}</p>
+        <p>Price: ${product.price}</p>
       </div>
       <button onClick={handleRemoveFromCart}>Remover</button>
     </div>
