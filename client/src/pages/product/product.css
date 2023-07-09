@@ -1,0 +1,117 @@
+@keyframes slide {
+    0% {margin-left: 0%;}
+    33% {margin-left: 0%;}
+
+    35% {margin-left: -100%;}
+    66% {margin-left: -100%;}
+
+    69% {margin-left: -200%;}
+    99% {margin-left: -200%;}
+  }
+.product {
+    display: flex;
+    background-image: url("../imagenes/fondo.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: white;
+    justify-content: center;
+    align-items: center;
+}
+.product h1 {
+    position: absolute;
+    top: 5%;
+}
+.containerImage {
+    flex: 1;
+    padding: 0;
+    float: right;
+    display: flex;
+    width: 50vh;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 255, 255);
+}
+
+.imagenes {
+    width: 50vh;
+    padding: 0;
+    height: auto;
+    border-radius: 10px;
+    overflow: hidden;
+    
+ }
+
+ .imagenes ul {
+    display: flex;
+    padding: 0;
+    width: 300%;
+    animation: slide 12s infinite alternate ease-in-out;
+ }
+
+ .imagenes li {
+    
+    border-radius: 10px;
+    list-style: none;
+    width: 100%;
+ }
+
+ .imagenes img {
+    width: 99%;
+    height: 99%;
+    border-style: solid;
+    border-color: rgba(68, 0, 77, 0.993);
+    border-radius: 10px;
+ }
+
+
+.containerDescripcion {
+    flex: 1;
+    float: left;
+    word-wrap: break-word;
+    width: 50vh;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.content {
+    background-color: rgba(151, 12, 179, 0.651);
+    box-shadow: 0px 0px 10px 5px rgb(1, 120, 255);
+    position: relative;
+    width: 90%;
+    height: 50vh auto;
+    border-radius: 8px;
+    padding: 10px;
+    margin-right: 10%;
+    top: 20%;
+    left: 4%;
+    border-color: rgb(255, 255, 255);
+    border-style: solid;
+}
+.boton1{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    display:inline-block;
+    padding:10px;
+    background: #eeff02;
+    width:20%;
+    text-align: center;
+    color:rgb(0, 0, 0);
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 5px rgb(21, 248, 0);
+
+   }
+
+  .boton1:hover{
+
+    box-shadow: 0px 0px 20px 5px rgb(248, 244, 0);
+    
+  }
