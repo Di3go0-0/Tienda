@@ -1,62 +1,90 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./login.css";
+import React from "react";
+import { useNavigate } from "react-router-dom"; // Import para la navegación
+import axios from "axios"; // Import para realizar peticiones
+import { useContext, useState, useEffect } from "react"; // Imports para los hooks
+import { RiMailLine, RiLockPasswordLine } from "react-icons/ri"; // Imports para los iconos
+import "./login.css"; // Import para el CSS
+
+const URI = 'http://localhost:3000/'; // Endpoint de la API para las peticiones
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Función para la navegación
 
   const navigateRegister = () => {
-    navigate("/register");
+    navigate(`/register`); // Navegar a la página de registro
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const navigateShopAddtoCart = () => {
+    navigate(`/shop`); // Navegar a la página de tienda
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+  const navigateEditInventory = () => {
+    navigate(`/editInventory`); // Navegar a la página de edición de inventario
   };
 
-  const handleSubmit = (e) => {
+  const [enter, Setenter] = useState(''); // Estado para el valor de enter del usuario
+  const [enterP, SetenterP] = useState(''); // Estado para el valor de enter de la contraseña
+  const [users, setUsers] = useState([]); // Estado para almacenar los usuarios
+
+  useEffect(() => {
+    getUsers(); // Obtener los usuarios al cargar el componente
+  }, []);
+
+  const getUsers = async () => {
+    const res = await axios.get(URI); // Obtener los usuarios desde la API
+    setUsers(res.data); // Actualizar el estado de los usuarios con los datos obtenidos
+  };
+
+  const compare = (e) => {
     e.preventDefault();
-    setEmail("");
-    setPassword("");
+    if (users.find((e) => e.user_name === enter && e.password === enterP)) {
+      if (enter === 'admin') {
+        navigateEditInventory(); // Navegar a la página de edición de inventario si el usuario es administrador
+      } else {
+        navigateShopAddtoCart(); // Navegar a la página de tienda para los usuarios normales
+      }
+    } else {
+      navigateLogin(); // Navegar a la página de inicio de sesión si el inicio de sesión falla
+    }
   };
 
-  const hasEmailValue = email.length > 0;
-  const hasPasswordValue = password.length > 0;
+  const navigateLogin = () => {
+    navigate(`/login`); // Navegar a la página de inicio de sesión
+  };
 
   return (
     <div className="loginContent">
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div className={`inputBox ${hasEmailValue ? "labelShifted" : ""}`}>
-          <label htmlFor="email">Email address:</label>
+      <form onSubmit={compare}>
+        <div className={`inputBox ${enter ? "labelShifted" : ""}`}>
+          <label htmlFor="email">
+            <RiMailLine /> email address:
+          </label>
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={handleEmailChange}
+            value={enter}
+            onChange={(e) => Setenter(e.target.value)}
           />
         </div>
-        <div className={`inputBox ${hasPasswordValue ? "labelShifted" : ""}`}>
-          <label htmlFor="password">Password:</label>
+        <div className={`inputBox ${enterP ? "labelShifted" : ""}`}>
+          <label htmlFor="password">
+            <RiLockPasswordLine /> Password:
+          </label>
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={handlePasswordChange}
+            value={enterP}
+            onChange={(e) => SetenterP(e.target.value)}
           />
         </div>
-        <button className="btn" type="submit">Sign in</button>
+        <button className="btn" type="submit">Log in</button>
         <button className="btn" type="button" onClick={navigateRegister}>
-          Log on
+          Register
         </button>
       </form>
     </div>
   );
-}
+};
 
 export default Login;
