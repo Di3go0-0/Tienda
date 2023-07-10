@@ -1,6 +1,11 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import "./product.css";
+import axios from 'axios';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+const URI = 'http://localhost:3001/products/';
 
 function Product() {
   const location = useLocation();
@@ -17,7 +22,7 @@ function Product() {
         setProducts(res.data)
     }
     const data = (products) => {
-        product.map((produc) => {
+        products.map((produc) => {
             if(products.id === id) {
                 return produc;
             }
@@ -25,7 +30,7 @@ function Product() {
         
     }
     const producto = data(products)
-    const {name , descripcion , img1 , img2 , img3 , precio } = producto
+    const {name , descripcion , img1 , img2 , img3 , precio } = producto ;
 
   return (
     <div className='product'>

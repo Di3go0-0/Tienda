@@ -40,7 +40,7 @@ function Store() {
     <div className="shop">
       <h1>productos</h1>
       <div className='contenedorProductos'>
-        {productos.map((produc) => (
+        {products.map((produc) => (
           <Producto info={produc} />
         ))}
       </div>
