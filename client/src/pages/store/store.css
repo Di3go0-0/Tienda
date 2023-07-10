@@ -37,7 +37,7 @@
     --alt: 450px;
 }
 
-.producto {
+.product {
     width: 250px;
     height: var(--alt);
     display: block;
@@ -86,7 +86,7 @@
    transform-origin: 50% 50%;
    transform: scale(1.05);
  }
- .descripcion {
+ .description {
    word-wrap: break-word;
    text-align: center;
    justify-content: center;
@@ -97,11 +97,11 @@
    margin: 5px 5px;
    padding-top: 1px;
  }
- .descripcion a {
+ .description a {
    text-decoration: none;
  }
 
- .descripcion .button {
+ .description .button {
    width: 50%;
    justify-content: center;
    align-items: center;
@@ -113,7 +113,7 @@
    background-color: bisque
  }
 
- .btn-edeptec {
+ .botton {
    display:flex;
    justify-content:center;
    align-items:center;
@@ -132,7 +132,7 @@
    transition:all 0.3s;
  }
  
- .btn-edeptec:hover{
+ .botton:hover{
    color:#0091ff;
    background-color: #ffffff;
  }
