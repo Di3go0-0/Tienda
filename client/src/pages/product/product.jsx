@@ -5,51 +5,61 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-const URI = 'http://localhost:3001/products/';
+const URI = 'http://localhost:3000/products/';
 
 function Product() {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const id = queryParams.get('id');
-
-  const[products,setProducts] = useState([]) //se guardan todos los productos
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const id = queryParams.get('id');
+  
+    const [product, setProduct] = useState(null);
     useEffect(() => {
-        getProducts()
+      getProducts();
     }, []);
-
-    const getProducts = async () => { //se hace la peticion para todos los usuarios
-        const res = await axios.get(URI)
-        setProducts(res.data)
+  
+    /**
+     * Realiza una petición para obtener todos los productos y guarda el producto específico en el estado.
+     */
+    const getProducts = async () => {
+      try {
+        const res = await axios.get(URI);
+        const products = res.data;
+        const foundProduct = products.find((product) => product.id === id);
+        if (foundProduct) {
+          setProduct(foundProduct);
+          // Realiza acciones adicionales con el producto obtenido aquí
+        }
+      } catch (error) {
+        // Manejo de errores en caso de que la petición falle
+        console.error(error);
+      }
+    };
+  
+    if (!product) {
+      return <div>Loading...</div>;
     }
-    const data = (products) => {
-        products.map((produc) => {
-            if(products.id === id) {
-                return produc;
-            }
-        })
-        
-    }
-    const producto = data(products)
-    const {name , descripcion , img1 , img2 , img3 , precio } = producto ;
+  
+    const { name, description, img1, img2, img3, price } = product;
+  
 
   return (
     <div className='product'>
         <h1>{name}</h1>
         <div className="containerImage">
-            <div className="imagenes">
+            <div className="image">
                 <ul>
-                    <li><img src={img1} alt={`imagen-1`} /></li>
-                    <li><img src={img2} alt={`imagen-2`} /></li>
-                    <li><img src={img3} alt={`imagen-3`} /></li>
+                    <li><img src={img1} alt={`image1`} /></li>
+                    <li><img src={img2} alt={`image2`} /></li>
+                    <li><img src={img3} alt={`image3`} /></li>
                 </ul>
             </div>
       </div>
-        <div className='containerDescripcion'>
+        <div className='containerDescription'>
             <div className='content'>
                 <h3>{name}</h3>
-                <p>{descripcion}</p>
-                <p>Precio: {precio}</p>
-                <a href ="/" class="boton1">Agregar</a> {/* es donde se grega al carrito */}
+                <p>{description}</p>
+                <p>Precio: {price}</p>
+                <a href ="/" class="button">Agregar</a> {/* es donde se grega al carrito */}
             </div>
         </div>
     </div>
