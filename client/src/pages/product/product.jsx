@@ -8,39 +8,42 @@ import { useEffect } from 'react';
 const URI = 'http://localhost:3000/products/';
 
 function Product() {
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const id = queryParams.get('id');
-  
-    const [product, setProduct] = useState(null);
-    useEffect(() => {
-      getProducts();
-    }, []);
-  
-    /**
-     * Realiza una petición para obtener todos los productos y guarda el producto específico en el estado.
-     */
-    const getProducts = async () => {
-      try {
-        const res = await axios.get(URI);
-        const products = res.data;
-        const foundProduct = products.find((product) => product.id === id);
-        if (foundProduct) {
-          setProduct(foundProduct);
-          // Realiza acciones adicionales con el producto obtenido aquí
-        }
-      } catch (error) {
-        // Manejo de errores en caso de que la petición falle
-        console.error(error);
-      }
-    };
-  
-    if (!product) {
-      return <div>Loading...</div>;
+  const location = useLocation(); // Obtener la ubicación actual de la página
+  const queryParams = new URLSearchParams(location.search); // Obtener los parámetros de la URL
+  const id = queryParams.get('id'); // Obtener el valor del parámetro 'id'
+
+  const [products, setProducts] = useState([]); // Estado para almacenar todos los productos
+  const [producto, setProducto] = useState(null); // Estado para almacenar el producto encontrado
+
+  useEffect(() => {
+    getProducts(); // Llamar a la función getProducts al montar el componente
+  }, []);
+
+  // Función para obtener todos los productos
+  const getProducts = async () => {
+    try {
+      const res = await axios.get(URI); // Realizar la petición GET a la URI correspondiente
+      setProducts(res.data); // Actualizar el estado 'products' con los datos recibidos
+    } catch (error) {
+      // Manejar el error en caso de que la petición falle
     }
-  
-    const { name, description, img1, img2, img3, price } = product;
-  
+  };
+
+  useEffect(() => {
+    // Realizar la búsqueda del producto cuando el estado 'products' o 'id' cambien
+    if (products.length > 0 && id) {
+      const foundProduct = products.find(product => product.id === id); // Buscar el producto por su ID
+      setProducto(foundProduct); // Actualizar el estado 'producto' con el producto encontrado
+    }
+  }, [products, id]);
+
+  if (!producto) {
+    // Si el producto aún no se ha encontrado, se retorna null o puedes manejarlo de otra forma
+    return null;
+  }
+
+  // Desestructurar las propiedades del producto para su uso posterior
+  const { name, description, img1, img2, img3, price } = producto;
 
   return (
     <div className='product'>
