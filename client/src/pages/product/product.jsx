@@ -5,10 +5,27 @@ import "./product.css";
 function Product() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+  const id = queryParams.get('id');
 
-  const name = queryParams.get('name');
-  const descripcion = queryParams.get('descripcion');
-  const precio = queryParams.get('precio');
+  const[products,setProducts] = useState([]) //se guardan todos los productos
+    useEffect(() => {
+        getProducts()
+    }, []);
+
+    const getProducts = async () => { //se hace la peticion para todos los usuarios
+        const res = await axios.get(URI)
+        setProducts(res.data)
+    }
+    const data = (products) => {
+        product.map((produc) => {
+            if(products.id === id) {
+                return produc;
+            }
+        })
+        
+    }
+    const producto = data(products)
+    const {name , descripcion , img1 , img2 , img3 , precio } = producto
 
   return (
     <div className='product'>
@@ -16,9 +33,9 @@ function Product() {
         <div className="containerImage">
             <div className="imagenes">
                 <ul>
-                    <li><img src='https://hips.hearstapps.com/hmg-prod/images/coco-mademoiselle-perfume-chanel-1675113242.png' alt={`imagen-1`} /></li>
-                    <li><img src='https://media.vogue.mx/photos/6359591754ceeedb9e917da8/master/w_2200,h_2500,c_limit/Perfumes-Mujer-Irresistible-Givenchy.jpg' alt={`imagen-2`} /></li>
-                    <li><img src='https://perfumaste.com/wp-content/uploads/2023/06/perfume-x-de-alhala-para-hombre-100-ml.jpg.webp' alt={`imagen-3`} /></li>
+                    <li><img src={img1} alt={`imagen-1`} /></li>
+                    <li><img src={img2} alt={`imagen-2`} /></li>
+                    <li><img src={img3} alt={`imagen-3`} /></li>
                 </ul>
             </div>
       </div>
@@ -27,7 +44,7 @@ function Product() {
                 <h3>{name}</h3>
                 <p>{descripcion}</p>
                 <p>Precio: {precio}</p>
-                <a href ="/" class="boton1">Agregar</a>
+                <a href ="/" class="boton1">Agregar</a> {/* es donde se grega al carrito */}
             </div>
         </div>
     </div>
