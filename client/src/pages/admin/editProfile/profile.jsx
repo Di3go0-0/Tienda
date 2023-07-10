@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from 'axios'; // Es para realizar peticiones y conectar el frontend con el backend
 import './editProfile.css'
 
 

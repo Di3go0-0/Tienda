@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import './product.css';
 
 const URI = 'http://example.com/products/'; // Reemplaza 'http://example.com/products/' con la URL de tu servidor web
 
